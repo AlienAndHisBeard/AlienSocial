@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section menu {
+    @if (ViewBag.LoggedIn)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Friends" asp-action="">Friends</a>
+        </li>
+        @if (ViewBag.admin)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Add">User</a>
+            </li>
+        }
+        <li class="nav-item align-self-end" style="margin-left:auto">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Log Out</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item align-self-end" style="margin-left:auto">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Login">Login</a>
+        </li>
+    }
+
+}
+
+<h1>Login</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Login" asp-action="Login">
+            <div class="text-danger"></div>
+            <div class="form-group">
+                <label for="login" class="control-label"></label>
+                <input name="login" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

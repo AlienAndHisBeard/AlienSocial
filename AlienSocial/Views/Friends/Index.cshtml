@@ -1,0 +1,85 @@
+﻿@model AlienSocial.Models.Friends
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section menu {
+    @if (ViewBag.LoggedIn)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Friends" asp-action="">Friends</a>
+        </li>
+        @if (ViewBag.admin)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="List">User</a>
+            </li>
+        }
+        <li class="nav-item align-self-end" style="margin-left:auto">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Log Out</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item align-self-end" style="margin-left:auto">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Login">Login</a>
+        </li>
+    }
+}
+
+<h1>Hi @ViewBag.user</h1>
+<h4>Add a new friend</h4>
+<p>
+    <form asp-controller="Friends" asp-action="Add">
+        <label for="login">Add friend </label>
+        <input name="login" />
+        <input type="submit" value="Add" />
+    </form>
+</p>
+<h4>Import or export your friend list</h4>
+<table style="text-align:center">
+    <tr>
+        <td>
+            <form asp-controller="Friends" asp-action="Import" method="post" enctype="multipart/form-data" style="float:left;">
+                <label for="postedFile"></label>
+                <input type="file" id="myFile" name="postedFile" />
+                <input type="submit" value="Import" />
+            </form>
+        </td>
+        <td>
+            <form asp-controller="Friends" asp-action="Export" method="post" style="float:right;">
+                <input type="submit" value="Export" />
+            </form>
+        </td>
+    </tr>
+</table>
+
+<h4>Your friends</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Friend name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.friends)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item)
+                </td>
+                <td>
+                    <form asp-controller="Friends" asp-action="Delete" asp-route-login="@item">
+                        <input type="submit" value="Delete" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
